@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BabysitterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BabysitterRepository::class)]
@@ -33,6 +35,17 @@ class Babysitter
 
     #[ORM\Column(type: 'boolean')]
     private $isAvailable;
+
+    #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'babysitters')]
+    private $languages;
+
+    #[ORM\ManyToOne(targetEntity: Contract::class, inversedBy: 'babysitters')]
+    private $contracts;
+
+    public function __construct()
+    {
+        $this->languages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +132,42 @@ class Babysitter
     public function setIsAvailable(bool $isAvailable): self
     {
         $this->isAvailable = $isAvailable;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Language>
+     */
+    public function getLanguages(): Collection
+    {
+        return $this->languages;
+    }
+
+    public function addLanguage(Language $language): self
+    {
+        if (!$this->languages->contains($language)) {
+            $this->languages[] = $language;
+        }
+
+        return $this;
+    }
+
+    public function removeLanguage(Language $language): self
+    {
+        $this->languages->removeElement($language);
+
+        return $this;
+    }
+
+    public function getContracts(): ?Contract
+    {
+        return $this->contracts;
+    }
+
+    public function setContracts(?Contract $contracts): self
+    {
+        $this->contracts = $contracts;
 
         return $this;
     }
