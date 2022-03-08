@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContractRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ContractRepository::class)]
@@ -30,6 +32,17 @@ class Contract
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $reviewDate;
+
+    #[ORM\OneToMany(mappedBy: 'contracts', targetEntity: Babysitter::class)]
+    private $babysitters;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'contracts')]
+    private $user;
+
+    public function __construct()
+    {
+        $this->babysitters = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +117,48 @@ class Contract
     public function setReviewDate(\DateTimeImmutable $reviewDate): self
     {
         $this->reviewDate = $reviewDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Babysitter>
+     */
+    public function getBabysitters(): Collection
+    {
+        return $this->babysitters;
+    }
+
+    public function addBabysitter(Babysitter $babysitter): self
+    {
+        if (!$this->babysitters->contains($babysitter)) {
+            $this->babysitters[] = $babysitter;
+            $babysitter->setContracts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBabysitter(Babysitter $babysitter): self
+    {
+        if ($this->babysitters->removeElement($babysitter)) {
+            // set the owning side to null (unless already changed)
+            if ($babysitter->getContracts() === $this) {
+                $babysitter->setContracts(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
