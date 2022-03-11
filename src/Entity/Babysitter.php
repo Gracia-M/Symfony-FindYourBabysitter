@@ -15,7 +15,7 @@ class Babysitter
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $picture;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -36,10 +36,10 @@ class Babysitter
     #[ORM\Column(type: 'boolean')]
     private $isAvailable;
 
-    #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'babysitters')]
+    #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'babysittersLanguage')]
     private $languages;
 
-    #[ORM\ManyToOne(targetEntity: Contract::class, inversedBy: 'babysitters')]
+    #[ORM\ManyToOne(targetEntity: Contract::class, inversedBy: 'babysittersContract')]
     private $contracts;
 
     public function __construct()

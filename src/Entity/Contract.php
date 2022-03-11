@@ -34,7 +34,7 @@ class Contract
     private $reviewDate;
 
     #[ORM\OneToMany(mappedBy: 'contracts', targetEntity: Babysitter::class)]
-    private $babysitters;
+    private $babysittersContract;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'contracts')]
     private $user;
@@ -126,13 +126,13 @@ class Contract
      */
     public function getBabysitters(): Collection
     {
-        return $this->babysitters;
+        return $this->babysittersContract;
     }
 
     public function addBabysitter(Babysitter $babysitter): self
     {
-        if (!$this->babysitters->contains($babysitter)) {
-            $this->babysitters[] = $babysitter;
+        if (!$this->babysittersContract->contains($babysitter)) {
+            $this->babysittersContract[] = $babysitter;
             $babysitter->setContracts($this);
         }
 
@@ -141,7 +141,7 @@ class Contract
 
     public function removeBabysitter(Babysitter $babysitter): self
     {
-        if ($this->babysitters->removeElement($babysitter)) {
+        if ($this->babysittersContract->removeElement($babysitter)) {
             // set the owning side to null (unless already changed)
             if ($babysitter->getContracts() === $this) {
                 $babysitter->setContracts(null);

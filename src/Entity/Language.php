@@ -22,11 +22,11 @@ class Language
     private $name;
 
     #[ORM\ManyToMany(targetEntity: Babysitter::class, mappedBy: 'languages')]
-    private $babysitters;
+    private $babysittersLanguage;
 
     public function __construct()
     {
-        $this->babysitters = new ArrayCollection();
+        $this->babysittersLanguage = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,13 +63,13 @@ class Language
      */
     public function getBabysitters(): Collection
     {
-        return $this->babysitters;
+        return $this->babysittersLanguage;
     }
 
     public function addBabysitter(Babysitter $babysitter): self
     {
-        if (!$this->babysitters->contains($babysitter)) {
-            $this->babysitters[] = $babysitter;
+        if (!$this->babysittersLanguage->contains($babysitter)) {
+            $this->babysittersLanguage[] = $babysitter;
             $babysitter->addLanguage($this);
         }
 
@@ -78,7 +78,7 @@ class Language
 
     public function removeBabysitter(Babysitter $babysitter): self
     {
-        if ($this->babysitters->removeElement($babysitter)) {
+        if ($this->babysittersLanguage->removeElement($babysitter)) {
             $babysitter->removeLanguage($this);
         }
 

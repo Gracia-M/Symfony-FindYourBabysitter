@@ -20,4 +20,4 @@ L’utilisateur enregistré peut se connecter en renseignant son adresse email e
 
 * Administrateur: l’administrateur peut ajouter, modifier ou supprimer des babysitters. Il peut voir la liste des utilisateurs ayant réservé une prestation et envoyer des notifications. L’administrateur peut valider ou supprimer les commentaires des utilisateurs. L’idée de ce projet est de pouvoir travailler sur tous les composants d’une application web: registration/inscription, authentification, autorisation, envoi d'email, ... 
 
-
+Voir Use Case 
