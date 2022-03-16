@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+<h2>Formulaire du babysitter:</h2>
+{% endblock %}
+
+{% block body %}
+{{ form_start (formBabysitter), {'action': path('add_babysitter'), 'method': 'POST'} }}
+    {{ form_widget (formBabysitter) }}
+    <input type="submit" class="btn" value="Envoyer" />
+{{ form_end (formBabysitter)}}
+{% endblock %}
