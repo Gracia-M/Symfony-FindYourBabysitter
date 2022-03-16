@@ -12,7 +12,7 @@ class BabysitterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('picture', FileType::class )
+            ->add('picture', TextType::class )
             ->add('firstname', TextType::class )
             ->add('lastname', TextType::class )
             ->add('gender', TextType::class )
