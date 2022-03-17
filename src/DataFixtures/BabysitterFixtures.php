@@ -8,23 +8,23 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class BabysitterFixtures extends Fixture
 {
-    public function load(ObjectManager $manager): void
+    public function load(ObjectManager $manager)
     {
-        // $faker = Faker\Factory::create();
-        // for ($i = 0; $i < 10; $i ++) {
-        //     $babysitter = new Babysitter(
-        //         ['picture'=>faker
-        //         'firstname'=>faker
-        //         'lastname'=>faker
-        //         'gender'=>faker
-        //         'location'=>faker
-        //         'description'=>faker
-        //         'isAvailable'=>
-        //         'languages'=>
-                
-        //         ]
-        //     )
-        // }
+        $faker = Faker\Factory::create();
+        for ($i = 0; $i < 10; $i++) {
+            $babysitter = new Babysitter(
+                ['picture'=>$faker->photo . "Babysitter",
+                'firstname'=>$faker->prenom,
+                'lastname'=>$faker->nom,
+                'gender'=>$faker->genre,
+                'location'=>$faker->lieu,
+                'description'=>$faker->realText,
+                'isAvailable'=>$faker->checkdate,
+                'languages'=>$faker->    
+            ]);
+
+            $manager->persist($babysitter);
+        }
         $manager->flush();
     }
 }
