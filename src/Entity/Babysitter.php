@@ -18,7 +18,7 @@ class Babysitter
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $picture;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255,)]
     private $firstname;
 
     #[ORM\Column(type: 'string', length: 255)]

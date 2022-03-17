@@ -3,27 +3,28 @@
 namespace App\Controller;
 
 use App\Entity\Babysitter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\BabysitterType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BabysitterController extends AbstractController
 {
-    // #[Route('/babysitter', name: 'app_babysitter')]
-    // public function babySitterProfile()
-    // {
-    //     return $this->render('babysitter/show.html.twig', $objReq);
-    // }
+    #[Route('/babysitter', name: 'app_babysitter')]
+    public function babySitterProfile()
+    {
+        return $this->render('babysitter/show.html.twig');
+    }
 
-    // #[Route('/babysitter{language}', name: 'app_babysitter')]
-    // public function listByLanguage($languages = null): Response
-    // {
+    #[Route('/babysitter{language}', name: 'app_babysitter')]
+    public function listByLanguage($languages = null): Response
+    {
 
-    //     return $this->render('babysitter/list_language.html.twig', $id);
-    // }
+        return $this->render('babysitter/list_language.html.twig', $languages);
+    }
 
     #[Route('/babysitter/formulaire', name: 'app_babysitter')]
-    public function showFormBabysitter()
+    public function addBabysitter()
     {
         $babysitter = new Babysitter();
         $formulaireBabysitter = $this->createForm(BabysitterType::class, $babysitter);
