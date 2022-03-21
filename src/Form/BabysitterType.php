@@ -2,38 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\Contract;
-use App\Entity\Language;
 use App\Entity\Babysitter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class BabysitterType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('picture', TextType::class )
+            ->add('picture', FileType::class, array ('label'=>'selectionner l\'image'))
             ->add('firstname', TextType::class )
             ->add('lastname', TextType::class )
             ->add('gender', TextType::class )
             ->add('location', TextType::class)
             ->add('description', TextareaType::class )
             ->add('isAvailable', CheckboxType::class)
-            ->add('languages', ChoiceType::class, [
-                'preferred_choices' => [
-                    'EN'=> 'Anglais',
-                    'FR'=> 'Français',
-                    'NL'=> 'Néerlandais',
-                    'IT'=> 'Italien',
-                    'ES'=> 'Espagnol'
-                ],
+            ->add('language', EntityType::class, [
+                'class'=> Language::class,
+                'choice_label' => 'label',
+                'preferred choices'=> 'name',
                 'multiple' => true,
                 'expanded' => false
             ])
