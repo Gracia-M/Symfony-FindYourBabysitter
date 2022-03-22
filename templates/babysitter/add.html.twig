@@ -1,0 +1,20 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Ajouter babysitter{% endblock %}
+
+{% block body %} #}
+
+{{ form_start (formulaireBabysitter)}}
+    {{ form_widget (formulaireBabysitter) }}
+    <input type="submit" class="btn" value="Envoyer" />
+{{ form_end (formulaireBabysitter)}}
+
+{% block stylesheets %}
+            {{ encore_entry_link_tags('app_add') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app_add') }}
+        {% endblock %}
+
+{# {% endblock %} #}

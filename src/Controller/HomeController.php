@@ -8,12 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app-login');
-        }
+        // if (!$this->getUser()) {
+        //     return $this->redirectToRoute('app-login');
+        // }
         return $this->render('home/index.html.twig');
     }
 }

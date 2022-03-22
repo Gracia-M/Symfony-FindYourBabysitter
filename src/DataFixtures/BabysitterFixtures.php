@@ -15,8 +15,8 @@ class BabysitterFixtures extends Fixture
         $faker = Faker\Factory::create();
         for ($i=0; $i < 5; $i++) {
             $language = new Language( [
-                'label'=> $faker->langLabel,
-                'name'=> $faker->langName
+                'label'=> $faker->label,
+                'name'=> $faker->langue,
             ]);
             $manager->persist($language);   
         }
