@@ -15,7 +15,7 @@ class Contract
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: 'time', nullable: true)]
     private $hourStartContract;
 
     #[ORM\Column(type: 'time', nullable: true)]
@@ -33,16 +33,11 @@ class Contract
     #[ORM\Column(type: 'datetime_immutable')]
     private $reviewDate;
 
-    #[ORM\OneToMany(mappedBy: 'contracts', targetEntity: Babysitter::class)]
-    private $babysittersContract;
-
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'contracts')]
     private $user;
 
-    public function __construct()
-    {
-        $this->babysitters = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(targetEntity: Babysitter::class, inversedBy: 'contracts')]
+    private $babysitter;
 
     public function getId(): ?int
     {
@@ -121,36 +116,6 @@ class Contract
         return $this;
     }
 
-    /**
-     * @return Collection<int, Babysitter>
-     */
-    public function getBabysitters(): Collection
-    {
-        return $this->babysittersContract;
-    }
-
-    public function addBabysitter(Babysitter $babysitter): self
-    {
-        if (!$this->babysittersContract->contains($babysitter)) {
-            $this->babysittersContract[] = $babysitter;
-            $babysitter->setContracts($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBabysitter(Babysitter $babysitter): self
-    {
-        if ($this->babysittersContract->removeElement($babysitter)) {
-            // set the owning side to null (unless already changed)
-            if ($babysitter->getContracts() === $this) {
-                $babysitter->setContracts(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -159,6 +124,18 @@ class Contract
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getBabysitter(): ?Babysitter
+    {
+        return $this->babysitter;
+    }
+
+    public function setBabysitter(?Babysitter $babysitter): self
+    {
+        $this->babysitter = $babysitter;
 
         return $this;
     }

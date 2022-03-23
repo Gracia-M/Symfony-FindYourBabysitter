@@ -39,12 +39,14 @@ class Babysitter
     #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'babysittersLanguage')]
     private $languages;
 
-    #[ORM\ManyToOne(targetEntity: Contract::class, inversedBy: 'babysittersContract')]
+    #[ORM\OneToMany(mappedBy: 'babysitter', targetEntity: Contract::class)]
     private $contracts;
+
 
     public function __construct()
     {
         $this->languages = new ArrayCollection();
+        $this->contracts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,14 +162,32 @@ class Babysitter
         return $this;
     }
 
-    public function getContracts(): ?Contract
+    /**
+     * @return Collection<int, Contract>
+     */
+    public function getContracts(): Collection
     {
         return $this->contracts;
     }
 
-    public function setContracts(?Contract $contracts): self
+    public function addContract(Contract $contract): self
     {
-        $this->contracts = $contracts;
+        if (!$this->contracts->contains($contract)) {
+            $this->contracts[] = $contract;
+            $contract->setBabysitter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContract(Contract $contract): self
+    {
+        if ($this->contracts->removeElement($contract)) {
+            // set the owning side to null (unless already changed)
+            if ($contract->getBabysitter() === $this) {
+                $contract->setBabysitter(null);
+            }
+        }
 
         return $this;
     }

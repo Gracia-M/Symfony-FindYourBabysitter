@@ -30,6 +30,11 @@ class BabysitterType extends AbstractType
                 'multiple' => true,
                 'expanded' => false
             ])
+            ->add('contracts', EntityType::class, [
+                'class'=> Contract::class,
+                
+
+            ])
         ;
     }
 

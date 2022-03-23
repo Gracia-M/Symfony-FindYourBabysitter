@@ -13,16 +13,18 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class BabysitterController extends AbstractController
 {
-    #[Route('/add', name: 'app_add')]
+    #[Route('babysitter/add', name: 'app_add')]
     public function add(Request $req)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $babysitter = new Babysitter();
         $formBabysitter = $this->createForm(BabysitterType::class, $babysitter);
         $formBabysitter->handleRequest($req);
 
         if($formBabysitter->isSubmitted() && $formBabysitter->isValid()) {
             $babysitter->setIsAvailable((true));
+            
             if ($babysitter->getPicture() !== null) {
                 $file = $formBabysitter->get('picture')->getData();
                 $fileName =  uniqid(). '.' .$file->guessExtension();
@@ -51,11 +53,13 @@ class BabysitterController extends AbstractController
 
     }
 
+    #[Route('babysitter/show', name: 'app_show')]
     public function show(Babysitter $babysitter) {
         return $this->render('/babysitter/show.html.twig', [
             'babysitter'=>$babysitter]);
     }
 
+    #[Route('babysitter/edit', name: 'app_edit')]
     public function edit(Babysitter $babysitter, Request $req)
     {
         $oldPicture = $babysitter->getPicture();
@@ -99,7 +103,7 @@ class BabysitterController extends AbstractController
             return $this->redirectToRoute('admin');
         }
 
-        return $this->render('blog/edit.html.twig', [
+        return $this->render('babysitter/edit.html.twig', [
             'babysitter' => $babysitter,
             'formBabysitter' => $formBabysitter->createView()
         ]);
