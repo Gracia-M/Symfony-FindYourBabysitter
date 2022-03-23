@@ -13,23 +13,18 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class BabysitterController extends AbstractController
 {
-    #[Route('/babysitter', name: 'app_babysitter')]
-    public function index(): Response
-    {
-        return $this->render('babysitter/index.html.twig');
-    }
-
     #[Route('/add', name: 'app_add')]
     public function add(Request $req)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $babysitter = new Babysitter();
-        $formulaireBabysitter = $this->createForm(BabysitterType::class, $babysitter);
-        $formulaireBabysitter->handleRequest($req);
+        $formBabysitter = $this->createForm(BabysitterType::class, $babysitter);
+        $formBabysitter->handleRequest($req);
 
-        if($formulaireBabysitter->isSubmitted() && $formulaireBabysitter->isValid()) {
+        if($formBabysitter->isSubmitted() && $formBabysitter->isValid()) {
             $babysitter->setIsAvailable((true));
             if ($babysitter->getPicture() !== null) {
-                $file = $formulaireBabysitter->get('picture')->getData();
+                $file = $formBabysitter->get('picture')->getData();
                 $fileName =  uniqid(). '.' .$file->guessExtension();
 
                 try {
@@ -50,16 +45,75 @@ class BabysitterController extends AbstractController
             $em->persist($babysitter);
             $em->flush();
 
-
         }
-        $vars = ['formBabysitter' => $formulaireBabysitter->createView()];
-        
-        return $this->render('/babysitter/add.html.twig', $vars);
+        return $this->render('/babysitter/add.html.twig', [
+            'formBabysitter' => $formBabysitter->createView()]);
 
     }
 
     public function show(Babysitter $babysitter) {
-        return $this->render('/babysitter/show.html.twig', ['babysitter'=>$babysitter]);
+        return $this->render('/babysitter/show.html.twig', [
+            'babysitter'=>$babysitter]);
+    }
+
+    public function edit(Babysitter $babysitter, Request $req)
+    {
+        $oldPicture = $babysitter->getPicture();
+
+        $formBabysitter = $this->createForm(BabysitterType::class, $babysitter);
+        $formBabysitter->handleRequest($req);
+
+        if ($formBabysitter->isSubmitted() && $formBabysitter->isValid()) {
+            $babysitter->setIsAvailable((true));
+
+            if (!$babysitter->getIsAvailable()) {
+                $babysitter->setContracts($this->generateSlug($babysitter->getTitle()));
+            }
+
+            if ($babysitter->getIsPublished()) {
+                $babysitter->setPublicationDate(new \DateTime());
+            }
+
+            if ($babysitter->getPicture() !== null && $babysitter->getPicture() !== $oldPicture) {
+                $file = $formBabysitter->get('picture')->getData();
+                $fileName = uniqid(). '.' .$file->guessExtension();
+
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    return new Response($e->getMessage());
+                }
+
+                $babysitter->setPicture($fileName);
+            } else {
+                $babysitter->setPicture($oldPicture);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($babysitter);
+            $em->flush();
+
+            return $this->redirectToRoute('admin');
+        }
+
+        return $this->render('blog/edit.html.twig', [
+            'babysitter' => $babysitter,
+            'formBabysitter' => $formBabysitter->createView()
+        ]);
+    }
+
+    public function remove(Babysitter $babysitter)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($babysitter);
+        $em->flush();
+
+        return $this->redirectToRoute('admin');
     }
 
 }

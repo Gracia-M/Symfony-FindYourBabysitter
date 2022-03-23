@@ -1,42 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<div class="container center">
+    <h1>Connexion</h1>
+    <form method="post" class="row">
+        {% if error %}
+            <div class="col s12 m6 l6 offset-m3 offset-l3"> 
+                <span class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+            </div>
+        {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            Vous êtes identifié en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        {% if app.user %}
+            <div class="col s12 m6 l6 offset-m3 offset-l3">
+                Vous êtes identifié en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+            </div>
+        {% endif %}
+        <div class="col s12 m6 l6 offset-m3 offset-l3">
+            <input type="username" value="{{ last_username }}" name="username" id="inputUsername" class="" autocomplete="username" required autofocus placeholder="Votre utilisateur">
         </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Veuillez vous identifier:</h1>
-    <label for="inputUsername">Nom d'utilisateur:</label>
-    <input type="username" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Mot de passe:</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
+        <div class="col s12 m6 l6 offset-m3 offset-l3">
+            <input type="password" name="password" id="inputPassword" class="" autocomplete="current-password" required placeholder="Mot de passe">
         </div>
-    #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        S'identifier
-    </button>
-</form>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+        #}
+
+        <div class="input-field col s12">
+            <input type="submit" class="btn btn-primary" value="Se Connecter" >
+        </div>
+    </form>
+</div>
 {% endblock %}
