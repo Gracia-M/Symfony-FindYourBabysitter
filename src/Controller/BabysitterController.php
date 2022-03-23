@@ -13,11 +13,9 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class BabysitterController extends AbstractController
 {
-    #[Route('babysitter/add', name: 'app_add')]
+    #[Route('/add', name: 'app_add')]
     public function add(Request $req)
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
         $babysitter = new Babysitter();
         $formBabysitter = $this->createForm(BabysitterType::class, $babysitter);
         $formBabysitter->handleRequest($req);
@@ -41,7 +39,7 @@ class BabysitterController extends AbstractController
                 $babysitter->setPicture($fileName);
             }
             if($babysitter->getIsAvailable()) {
-                $babysitter->setContracts(new Contract);
+                $babysitter->getContracts(new Contract);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($babysitter);
@@ -53,13 +51,13 @@ class BabysitterController extends AbstractController
 
     }
 
-    #[Route('babysitter/show', name: 'app_show')]
+    #[Route('/show/{url}', name: 'app_show')]
     public function show(Babysitter $babysitter) {
         return $this->render('/babysitter/show.html.twig', [
             'babysitter'=>$babysitter]);
     }
 
-    #[Route('babysitter/edit', name: 'app_edit')]
+    #[Route('/edit/{id}', name: 'app_edit')]
     public function edit(Babysitter $babysitter, Request $req)
     {
         $oldPicture = $babysitter->getPicture();
@@ -109,9 +107,9 @@ class BabysitterController extends AbstractController
         ]);
     }
 
+    #[Route('/remove/{id}', name: 'app_remove')]
     public function remove(Babysitter $babysitter)
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($babysitter);

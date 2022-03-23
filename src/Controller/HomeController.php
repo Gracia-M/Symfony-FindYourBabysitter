@@ -5,13 +5,14 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Babysitter;
 use App\Repository\BabysitterRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('/', name: 'app_home')]
     public function index(BabysitterRepository $babysitterRepository)
     {
         $babysitters = $babysitterRepository->findBy(
@@ -24,16 +25,16 @@ class HomeController extends AbstractController
     }
 
     #[Route('/admin', name: 'app_admin')]
-    public function admin()
+    public function admin(BabysitterRepository $babysitterRepository, UserRepository $userRepository)
     {
-        $babysitters = $this->getDoctrine()->getRepository(Babysitter::class)->findBy(
+        $babysitters = $babysitterRepository->findBy(
             [],
             ['isAvailable' => 'DESC']
         );
 
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $users = $userRepository->findAll();
 
-        return $this->render('home/admin.html.twig', [
+        return $this->render('/admin/index.html.twig', [
             'babysitters' => $babysitters,
             'users' => $users
         ]);

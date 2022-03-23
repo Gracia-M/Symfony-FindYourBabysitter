@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ babysitter.firstname }} {{ babysitter.firstname }}{% endblock %}
+
+{% block content %}
+	<article class="container">
+		<div class="row">
+			<div class="col s12 m12 l8 offset-l2">
+				<h2>{{ babysitter.firstname }}</h2>
+				<span>{{ babysitter.publicationDate|date('d/m/Y') }}</span>
+				<p>
+					<img src="{{ asset('uploads/' ~ babysitter.picture) }}" class="responsive-img">
+				</p>
+				<span class="languages">{% for language in babysitter.languages %} {{ language.label }}{{ loop.last ? '' : ',' }} {% endfor %}</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12 m12 l8 offset-l2">
+				<p>
+					{{ babysitter.description }}
+				</p>
+			</div>
+	</article>
+{% endblock %}

@@ -7,6 +7,7 @@ use App\Entity\Babysitter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,16 +27,19 @@ class BabysitterType extends AbstractType
             ->add('languages', EntityType::class, [
                 'class'=> Language::class,
                 'choice_label' => 'label',
-                'languagename'=> 'name',
+                'prefered_choices'=> ['EN','FR','NL','ES','IT'],
                 'multiple' => true,
                 'expanded' => false
             ])
+            ->add('isAvailable', CheckboxType::class)
+
             ->add('contracts', EntityType::class, [
                 'class'=> Contract::class,
                 
+                
+                
 
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
