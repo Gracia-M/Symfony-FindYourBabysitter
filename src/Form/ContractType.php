@@ -2,31 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\Babysitter;
+use App\Entity\Contract;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BabysitterType extends AbstractType
+class ContractType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('picture')
-            ->add('firstname')
-            ->add('lastname')
-            ->add('gender')
-            ->add('location')
-            ->add('description')
-            ->add('isAvailable')
-            ->add('languages')
+            ->add('hourStartContract')
+            ->add('hourEndContract')
+            ->add('dateStartContract')
+            ->add('dateEndContract')
+            ->add('review')
+            ->add('reviewDate')
+            ->add('user')
+            ->add('babysitter')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Babysitter::class,
+            'data_class' => Contract::class,
         ]);
     }
 }

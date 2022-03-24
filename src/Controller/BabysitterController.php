@@ -2,120 +2,75 @@
 
 namespace App\Controller;
 
-use App\Entity\Contract;
 use App\Entity\Babysitter;
-use App\Form\BabysitterType;
+use App\Form\Babysitter1Type;
+use App\Repository\BabysitterRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
+#[Route('/babysitter')]
 class BabysitterController extends AbstractController
 {
-    #[Route('/add', name: 'app_add')]
-    public function add(Request $req)
+    #[Route('/', name: 'app_babysitter_index', methods: ['GET'])]
+    public function index(BabysitterRepository $babysitterRepository): Response
     {
-        $babysitter = new Babysitter();
-        $formBabysitter = $this->createForm(BabysitterType::class, $babysitter);
-        $formBabysitter->handleRequest($req);
-
-        if($formBabysitter->isSubmitted() && $formBabysitter->isValid()) {
-            $babysitter->setIsAvailable((true));
-            
-            if ($babysitter->getPicture() !== null) {
-                $file = $formBabysitter->get('picture')->getData();
-                $fileName =  uniqid(). '.' .$file->guessExtension();
-
-                try {
-                    $file->move(
-                        $this->getParameter('images_directory'), // Le dossier dans lequel le fichier va être charger
-                        $fileName
-                    );
-                } catch (FileException $e) {
-                    return new Response($e->getMessage());
-                }
-
-                $babysitter->setPicture($fileName);
-            }
-            if($babysitter->getIsAvailable()) {
-                $babysitter->getContracts(new Contract);
-            }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($babysitter);
-            $em->flush();
-
-        }
-        return $this->render('/babysitter/add.html.twig', [
-            'formBabysitter' => $formBabysitter->createView()]);
-
-    }
-
-    #[Route('/show/{url}', name: 'app_show')]
-    public function show(Babysitter $babysitter) {
-        return $this->render('/babysitter/show.html.twig', [
-            'babysitter'=>$babysitter]);
-    }
-
-    #[Route('/edit/{id}', name: 'app_edit')]
-    public function edit(Babysitter $babysitter, Request $req)
-    {
-        $oldPicture = $babysitter->getPicture();
-
-        $formBabysitter = $this->createForm(BabysitterType::class, $babysitter);
-        $formBabysitter->handleRequest($req);
-
-        if ($formBabysitter->isSubmitted() && $formBabysitter->isValid()) {
-            $babysitter->setIsAvailable((true));
-
-            if (!$babysitter->getIsAvailable()) {
-                $babysitter->setContracts($this->generateSlug($babysitter->getTitle()));
-            }
-
-            if ($babysitter->getIsPublished()) {
-                $babysitter->setPublicationDate(new \DateTime());
-            }
-
-            if ($babysitter->getPicture() !== null && $babysitter->getPicture() !== $oldPicture) {
-                $file = $formBabysitter->get('picture')->getData();
-                $fileName = uniqid(). '.' .$file->guessExtension();
-
-                try {
-                    $file->move(
-                        $this->getParameter('images_directory'),
-                        $fileName
-                    );
-                } catch (FileException $e) {
-                    return new Response($e->getMessage());
-                }
-
-                $babysitter->setPicture($fileName);
-            } else {
-                $babysitter->setPicture($oldPicture);
-            }
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($babysitter);
-            $em->flush();
-
-            return $this->redirectToRoute('admin');
-        }
-
-        return $this->render('babysitter/edit.html.twig', [
-            'babysitter' => $babysitter,
-            'formBabysitter' => $formBabysitter->createView()
+        return $this->render('babysitter/index.html.twig', [
+            'babysitters' => $babysitterRepository->findAll(),
         ]);
     }
 
-    #[Route('/remove/{id}', name: 'app_remove')]
-    public function remove(Babysitter $babysitter)
+    #[Route('/new', name: 'app_babysitter_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, BabysitterRepository $babysitterRepository): Response
     {
+        $babysitter = new Babysitter();
+        $form = $this->createForm(Babysitter1Type::class, $babysitter);
+        $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($babysitter);
-        $em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $babysitterRepository->add($babysitter);
+            return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
+        }
 
-        return $this->redirectToRoute('admin');
+        return $this->renderForm('babysitter/new.html.twig', [
+            'babysitter' => $babysitter,
+            'form' => $form,
+        ]);
     }
 
+    #[Route('/{id}', name: 'app_babysitter_show', methods: ['GET'])]
+    public function show(Babysitter $babysitter): Response
+    {
+        return $this->render('babysitter/show.html.twig', [
+            'babysitter' => $babysitter,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_babysitter_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Babysitter $babysitter, BabysitterRepository $babysitterRepository): Response
+    {
+        $form = $this->createForm(Babysitter1Type::class, $babysitter);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $babysitterRepository->add($babysitter);
+            return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('babysitter/edit.html.twig', [
+            'babysitter' => $babysitter,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_babysitter_delete', methods: ['POST'])]
+    public function delete(Request $request, Babysitter $babysitter, BabysitterRepository $babysitterRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$babysitter->getId(), $request->request->get('_token'))) {
+            $babysitterRepository->remove($babysitter);
+        }
+
+        return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
+    }
 }

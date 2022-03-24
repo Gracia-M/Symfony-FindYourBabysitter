@@ -34,12 +34,12 @@ Voir Relation entre tables dans la BD
 2. WIREFRAME 
 
 2.1. Login
-User(parent or admin) peuvent utiliser leur username + password pour se logger
-
+User(parent or admin) peuvent utiliser leur email + password pour se logger
+![](login.jpg)
 
 2.2 Page pour s'enregistrer
 Le visiteur peut s'enregistrer en remplissant un formulaire
-
+![](Inscription.jpg)
 
 2.3 Home de l'User enregistré
 

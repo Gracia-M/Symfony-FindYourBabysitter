@@ -1,24 +1,50 @@
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
 
-{% block title %}{{ babysitter.firstname }} {{ babysitter.firstname }}{% endblock %}
+{% block title %}Babysitter{% endblock %}
 
-{% block content %}
-	<article class="container">
-		<div class="row">
-			<div class="col s12 m12 l8 offset-l2">
-				<h2>{{ babysitter.firstname }}</h2>
-				<span>{{ babysitter.publicationDate|date('d/m/Y') }}</span>
-				<p>
-					<img src="{{ asset('uploads/' ~ babysitter.picture) }}" class="responsive-img">
-				</p>
-				<span class="languages">{% for language in babysitter.languages %} {{ language.label }}{{ loop.last ? '' : ',' }} {% endfor %}</span>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col s12 m12 l8 offset-l2">
-				<p>
-					{{ babysitter.description }}
-				</p>
-			</div>
-	</article>
+{% block body %}
+    <h1>Babysitter</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ babysitter.id }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>{{ babysitter.picture }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ babysitter.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ babysitter.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ babysitter.gender }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ babysitter.location }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ babysitter.description }}</td>
+            </tr>
+            <tr>
+                <th>IsAvailable</th>
+                <td>{{ babysitter.isAvailable ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_babysitter_index') }}">back to list</a>
+
+    <a href="{{ path('app_babysitter_edit', {'id': babysitter.id}) }}">edit</a>
+
+    {{ include('babysitter/_delete_form.html.twig') }}
 {% endblock %}

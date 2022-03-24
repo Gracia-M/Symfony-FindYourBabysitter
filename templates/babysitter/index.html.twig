@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Babysitter index{% endblock %}
+
+{% block body %}
+    <h1>Babysitter index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Picture</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Gender</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th>IsAvailable</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for babysitter in babysitters %}
+            <tr>
+                <td>{{ babysitter.id }}</td>
+                <td>{{ babysitter.picture }}</td>
+                <td>{{ babysitter.firstname }}</td>
+                <td>{{ babysitter.lastname }}</td>
+                <td>{{ babysitter.gender }}</td>
+                <td>{{ babysitter.location }}</td>
+                <td>{{ babysitter.description }}</td>
+                <td>{{ babysitter.isAvailable ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_babysitter_show', {'id': babysitter.id}) }}">show</a>
+                    <a href="{{ path('app_babysitter_edit', {'id': babysitter.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_babysitter_new') }}">Create new</a>
+{% endblock %}

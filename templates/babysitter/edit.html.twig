@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Babysitter{% endblock %}
+
+{% block body %}
+    <h1>Edit Babysitter</h1>
+
+    {{ include('babysitter/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_babysitter_index') }}">back to list</a>
+
+    {{ include('babysitter/_delete_form.html.twig') }}
+{% endblock %}

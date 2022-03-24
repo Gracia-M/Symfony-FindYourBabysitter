@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contract index{% endblock %}
+
+{% block body %}
+    <h1>Contract index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>HourStartContract</th>
+                <th>HourEndContract</th>
+                <th>DateStartContract</th>
+                <th>DateEndContract</th>
+                <th>Review</th>
+                <th>ReviewDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contract in contracts %}
+            <tr>
+                <td>{{ contract.id }}</td>
+                <td>{{ contract.hourStartContract ? contract.hourStartContract|date('H:i:s') : '' }}</td>
+                <td>{{ contract.hourEndContract ? contract.hourEndContract|date('H:i:s') : '' }}</td>
+                <td>{{ contract.dateStartContract ? contract.dateStartContract|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ contract.dateEndContract ? contract.dateEndContract|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ contract.review }}</td>
+                <td>{{ contract.reviewDate ? contract.reviewDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_contract_show', {'id': contract.id}) }}">show</a>
+                    <a href="{{ path('app_contract_edit', {'id': contract.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_contract_new') }}">Create new</a>
+{% endblock %}

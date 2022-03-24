@@ -165,7 +165,7 @@ class Babysitter
     /**
      * @return Collection<int, Contract>
      */
-    public function getContracts(): Collection
+    public function getContracts(): ?Collection
     {
         return $this->contracts;
     }
