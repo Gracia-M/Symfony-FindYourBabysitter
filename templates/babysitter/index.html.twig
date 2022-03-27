@@ -1,49 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Babysitter{% endblock %}
+{% block title %}Home {% endblock %}
 
 {% block body %}
-<div class="container center">
-    <h3>Babysitter</h3>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Picture</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Gender</th>
-                <th>Location</th>
-                <th>Description</th>
-                <th>IsAvailable</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="container">
+    <div class="row">
         {% for babysitter in babysitters %}
-            <tr>
-                <td>{{ babysitter.id }}</td>
-                <td>{{ babysitter.picture }}</td>
-                <td>{{ babysitter.firstname }}</td>
-                <td>{{ babysitter.lastname }}</td>
-                <td>{{ babysitter.gender }}</td>
-                <td>{{ babysitter.location }}</td>
-                <td>{{ babysitter.description }}</td>
-                <td>{{ babysitter.isAvailable ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_babysitter_show', {'id': babysitter.id}) }}">show</a>
-                    <a href="{{ path('app_babysitter_edit', {'id': babysitter.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">pas encore des babysitters</td>
-            </tr>
+            <div class="col s12 m4 l3">
+                <div class="babysitter-card">
+                    <img src="{{ asset('uploads/' ~ babysitter.picture) }}" class="responsive-img">
+                    {# <h2><a href="{{ path('app_babysitter_show', {'url': article.url}) }}">{{ article.title }}</a></h2>
+                    <span class="date">{{ article.publicationDate|date('d/m/Y') }}</span> #}
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_babysitter_new') }}">Ajouter un nouveau</a>
+    </div>
+    
 </div>
+
 {% endblock %}

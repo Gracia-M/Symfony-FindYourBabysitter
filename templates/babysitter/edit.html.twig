@@ -3,11 +3,18 @@
 {% block title %}Modifier Babysitter{% endblock %}
 
 {% block body %}
-    <h3>Modifier un Babysitter</h3>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <h3>Modifier un Babysitter</h3>
+        </div>
+    </div>
 
-    {{ include('babysitter/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('babysitter/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_babysitter_index') }}">back to list</a>
+    <a href="{{ path('app_babysitter_index') }}">Retour à la liste</a>
 
     {{ include('babysitter/_delete_form.html.twig') }}
+
+</div>
 {% endblock %}

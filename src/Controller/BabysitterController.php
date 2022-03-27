@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Babysitter;
 use App\Form\Babysitter1Type;
 use App\Repository\BabysitterRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/babysitter')]
 class BabysitterController extends AbstractController
@@ -30,6 +31,21 @@ class BabysitterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $babysitterRepository->add($babysitter);
+            if ($babysitter->getPicture() !== null) {
+                $file = $form->get('picture')->getData();
+                $fileName =  uniqid(). '.' .$file->guessExtension();
+
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'), // Le dossier dans lequel le fichier va être charger
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    return new Response($e->getMessage());
+                }
+
+                $babysitter->setPicture($fileName);
+            }
             return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
         }
 

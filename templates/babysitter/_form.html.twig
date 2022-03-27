@@ -1,4 +1,41 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+{{ form_start(form, {'attr': {'class': 'row'}}) }}
+    <div class="input-field col s12 m12 l12">
+        {{ form_widget(form.picture) }}
+    </div>
+
+    <div class="input-field col s12 m6 l6">
+        {{ form_widget(form.firstname, {'attr':{'placeholder': 'Le prenom'}}) }}
+        {{ form_label(form.firstname, 'Prénom')}}
+    </div>
+    <div class="input-field col s12 m6 l6">
+        {{ form_widget(form.lastname, {'attr':{'placeholder': 'Le nom de famille'}}) }}
+        {{ form_label(form.lastname, 'Nom de famille')}}
+    </div>
+    <div class="input-field col s12 m6 l6">
+        {{ form_widget(form.gender, {'attr':{'placeholder': 'Le sexe'}}) }}
+        {{ form_label(form.gender, 'Sexe')}}
+    </div>
+    <div class="input-field col s12 m6 l6">
+        {{ form_widget(form.location, {'attr':{'placeholder': 'Le lieu de résidence'}}) }}
+        {{ form_label(form.location, 'Lieu de résidence')}}
+    </div>
+    <div class="input-field col s12 m6 l6">
+        {{ form_widget(form.languages) }}
+        {{ form_label(form.languages, 'Choisissez une ou plusieurs langues')}}
+    </div>
+    <div class="input-field col s12 m12 l12">
+        {{ form_widget(form.description, {'attr':{'class': 'masterialize-textarea', 'placeholder': 'La description du babysitter' }}) }}
+    </div>
+    <div class="input-field col s12 m12 l12">
+        <p>
+            <label>
+                {{ form_widget(form.isAvailable, {'attr': {'class':'filled-in'}}) }}
+                <span>Disponible</span>
+            </label>
+        </p>
+    </div>
+    <div class="input-field col s12 m12 l12">
+        <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+    </div>
+    {# <button class="btn">{{ button_label|default('Enregistrer') }}</button> #}
 {{ form_end(form) }}

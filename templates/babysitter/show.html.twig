@@ -3,8 +3,11 @@
 {% block title %}Babysitter{% endblock %}
 
 {% block body %}
-    <h1>Babysitter</h1>
-
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <h3>Babysitter</h3>
+        </div>
     <table class="table">
         <tbody>
             <tr>
@@ -42,9 +45,28 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_babysitter_index') }}">back to list</a>
+    <a href="{{ path('app_babysitter_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_babysitter_edit', {'id': babysitter.id}) }}">edit</a>
+    <a href="{{ path('app_babysitter_edit', {'id': babysitter.id}) }}">modifier</a>
 
     {{ include('babysitter/_delete_form.html.twig') }}
+
+    {# <babysitter class="container">
+		<div class="row">
+			<div class="col s12 m12 l8 offset-l2">
+				<h2>{{ babysitter.firstname }} {{babysitter.lastname}}</h2>
+				<span>{{ babysitter.publicationDate|date('d/m/Y') }}</span>
+				<p>
+					<img src="{{ asset('uploads/' ~ babysitter.picture) }}" class="responsive-img">
+				</p>
+				<span class="languages">{% for language in babysitter.languages %} {{ language.label }}{{ loop.last ? '' : ',' }} {% endfor %}</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12 m12 l8 offset-l2">
+				<p>
+					{{ babysitter.description }}
+				</p>
+			</div>
+	</babysitter> #}
 {% endblock %}
