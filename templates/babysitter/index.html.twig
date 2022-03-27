@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Babysitter index{% endblock %}
+{% block title %}Babysitter{% endblock %}
 
 {% block body %}
-    <h1>Babysitter index</h1>
+<div class="container center">
+    <h3>Babysitter</h3>
 
     <table class="table">
         <thead>
@@ -37,11 +38,12 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">pas encore des babysitters</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_babysitter_new') }}">Create new</a>
+    <a href="{{ path('app_babysitter_new') }}">Ajouter un nouveau</a>
+</div>
 {% endblock %}

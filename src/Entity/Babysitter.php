@@ -141,7 +141,7 @@ class Babysitter
     /**
      * @return Collection<int, Language>
      */
-    public function getLanguages(): Collection
+    public function getLanguages(): ?Collection
     {
         return $this->languages;
     }

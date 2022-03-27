@@ -17,14 +17,14 @@
 	    	<div class="container">
 	    		<a href="{{ path('app_home') }}" class="brand-logo">Find Your Babysitter</a>
 			      	<ul id="nav-mobile" class="right hide-on-med-and-down">
-			        <li><a href="{{ path('app_home') }}">Home</a></li>
+			        <li><a href="{{ path('app_home') }}"><strong>Home</strong></a></li>
 			        {% if app.user %}
 			        	{% if is_granted('ROLE_ADMIN') %}
 							<li><a href="/admin">Admin.</a></li>
 						{% endif %}
-						<li><a href="/logout">Deconnexion</a></li>
+						<li><a href="/logout"><strong>Deconnexion</strong></a></li>
 					{% else %}
-						<li><a href="/login">Connexion</a></li>
+						<li><a href="/login"><strong>Connexion</strong></a></li>
 			        {% endif %}
 		      	</ul>
 	    	</div>

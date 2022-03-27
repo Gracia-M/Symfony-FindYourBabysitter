@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contract index{% endblock %}
+{% block title %}Contract{% endblock %}
 
 {% block body %}
-    <h1>Contract index</h1>
+    <h3>Contract</h3>
 
     <table class="table">
         <thead>
@@ -29,13 +29,13 @@
                 <td>{{ contract.review }}</td>
                 <td>{{ contract.reviewDate ? contract.reviewDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_contract_show', {'id': contract.id}) }}">show</a>
-                    <a href="{{ path('app_contract_edit', {'id': contract.id}) }}">edit</a>
+                    <a href="{{ path('app_contract_show', {'id': contract.id}) }}">afficher</a>
+                    <a href="{{ path('app_contract_edit', {'id': contract.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">pas encore des contrats</td>
             </tr>
         {% endfor %}
         </tbody>

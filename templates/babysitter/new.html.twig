@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Babysitter{% endblock %}
+{% block title %}Nouveau Babysitter{% endblock %}
 
 {% block body %}
-    <h1>Create new Babysitter</h1>
+<div class="container">
+    <h3>Ajouter un nouveau Babysitter</h3>
 
     {{ include('babysitter/_form.html.twig') }}
-
-    <a href="{{ path('app_babysitter_index') }}">back to list</a>
+   
+    <a href="{{ path('app_babysitter_index') }}">Retour à la liste</a>
+</div>
 {% endblock %}
