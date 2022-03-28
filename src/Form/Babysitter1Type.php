@@ -20,7 +20,6 @@ class Babysitter1Type extends AbstractType
         $builder
             ->add('picture', FileType::class, [
                 'required' => false,
-                'data_class' => null
             ])
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)

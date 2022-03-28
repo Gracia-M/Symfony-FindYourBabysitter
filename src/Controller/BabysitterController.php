@@ -33,7 +33,7 @@ class BabysitterController extends AbstractController
             $babysitterRepository->add($babysitter);
             if ($babysitter->getPicture() !== null) {
                 $file = $form->get('picture')->getData();
-                $fileName =  uniqid(). '.' .$file->guessExtension();
+                $fileName =  md5(uniqid()). '.' .$file->guessExtension();
 
                 try {
                     $file->move(
