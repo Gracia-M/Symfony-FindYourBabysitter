@@ -1,9 +1,9 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Admin. | {{ parent() }}{% endblock %}
+{% block title %}Admin. {% endblock %}
 
 {% block body %}
-{# <div class="container center">
+<div class="container center">
     <h3>Babysitter</h3>
 
     <table class="table">
@@ -32,8 +32,8 @@
                 <td>{{ babysitter.description }}</td>
                 <td>{{ babysitter.isAvailable ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_babysitter_show', {'id': babysitter.id}) }}">show</a>
-                    <a href="{{ path('app_babysitter_edit', {'id': babysitter.id}) }}">edit</a>
+                    <a href="{{ path('app_babysitter_show', {'id': babysitter.id}) }}">afficher |</a>
+                    <a href="{{ path('app_babysitter_edit', {'id': babysitter.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -45,8 +45,8 @@
     </table>
 
     <a href="{{ path('app_babysitter_new') }}">Ajouter un nouveau</a>
-</div> #}
-<div class="admin-page">
+</div>
+{# <div class="admin-page">
     <div class="container">
         <div class="row">
             <div class="col s12">
@@ -73,7 +73,7 @@
                             </td>
                             {# <td>{{ babysitter.isAvailable ? babysitter. |date('d/m/Y') : '-' }}</td> #}
                             {# <td>{{ article.lastUpdateDate|date('d/m/Y') }}</td> #}
-                            <td>
+                            {# <td>
                                 <a href="{{ path('app_edit', {'id': babysitter.id }) }}"><i class="material-icons blue-text">modifier</i></a>
                                 <a href="{{ path('app_remove', {'id': babysitter.id}) }}"><i class="material-icons red-text">effacer</i></a>
                             </td>
@@ -82,7 +82,7 @@
                     {% endfor %}
                 </table>
             </div>
-        </div>
+        </div> #} 
 
         <div class="row">
             <div class="col s12 m-t-30">
