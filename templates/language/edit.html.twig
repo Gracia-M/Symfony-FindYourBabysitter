@@ -3,7 +3,12 @@
 {% block title %}Edit Language{% endblock %}
 
 {% block body %}
-    <h1>Edit Language</h1>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <h4>Modifier une Langue</h4>
+        </div>
+    </div>
 
     {{ include('language/_form.html.twig', {'button_label': 'Update'}) }}
 

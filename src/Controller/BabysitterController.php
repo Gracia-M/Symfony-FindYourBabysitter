@@ -34,23 +34,16 @@ class BabysitterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $babysitterRepository->add($babysitter);
-            if ($babysitter->getPicture() !== null) {
+            if ($babysitter->getPicture() != null) {
                 $file = $form->get('picture')->getData();
                 $fileName =  md5(uniqid()). '.' .$file->guessExtension();
 
-                try {
-                    $file->move(
-                        $this->getParameter('images_directory'), // Le dossier dans lequel le fichier va être charger
-                        $fileName
-                    );
-                } catch (FileException $e) {
-                    return new Response($e->getMessage());
-                }
+                $file->move('/uploads', $fileName);
 
                 $babysitter->setPicture($fileName);
             }
             // return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('app_admin');
         }
 
         return $this->renderForm('babysitter/new.html.twig', [
@@ -70,12 +63,15 @@ class BabysitterController extends AbstractController
     #[Route('/{id}/edit', name: 'app_babysitter_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Babysitter $babysitter, BabysitterRepository $babysitterRepository): Response
     {
+        $oldPicture = $babysitter->getPicture();
+
         $form = $this->createForm(Babysitter1Type::class, $babysitter);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $babysitterRepository->add($babysitter);
-            return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
+            // return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin');
         }
 
         return $this->renderForm('babysitter/edit.html.twig', [
