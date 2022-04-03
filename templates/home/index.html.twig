@@ -3,14 +3,16 @@
 
 {% block title %}Home{% endblock %}
 
-{% block content %}
+{% block body %}
 	<div class="container">
 		<div class="row">
 			{% for babysitter in babysitters %}
 				<div class="col s12 m4 l3">
 					<div class="babysitter-card">
 						<img src="{{ asset('uploads/' ~ babysitter.picture) }}" class="responsive-img">
-						
+						<h4><a href="{{ path('app_babysitter_show', {'id': babysitter.id}) }}"> {{ babysitter.firstname }} {{ babysitter.lastname }}</a></h4>
+						<h5 class="location">{{ babysitter.location }}</h5>
+
 					</div>
 				</div>
 			{% endfor %}

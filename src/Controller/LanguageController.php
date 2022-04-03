@@ -24,6 +24,8 @@ class LanguageController extends AbstractController
     #[Route('/new', name: 'app_language_new', methods: ['GET', 'POST'])]
     public function new(Request $request, LanguageRepository $languageRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $language = new Language();
         $form = $this->createForm(LanguageType::class, $language);
         $form->handleRequest($request);
@@ -50,6 +52,8 @@ class LanguageController extends AbstractController
     #[Route('/{id}/edit', name: 'app_language_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Language $language, LanguageRepository $languageRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $form = $this->createForm(LanguageType::class, $language);
         $form->handleRequest($request);
 

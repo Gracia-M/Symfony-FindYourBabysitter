@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Babysitter;
-use App\Form\Babysitter1Type;
+use App\Form\BabysitterType;
 use App\Repository\BabysitterRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[Route('/babysitter')]
 class BabysitterController extends AbstractController
@@ -17,35 +18,40 @@ class BabysitterController extends AbstractController
     #[Route('/', name: 'app_babysitter_index', methods: ['GET'])]
     public function index(BabysitterRepository $babysitterRepository): Response
     {
-
-        return $this->render('babysitter/index.html.twig', [
-            'babysitters' => $babysitterRepository->findAll(),
-        ]);
+        $babysitters = $babysitterRepository->findBy(
+            ['isAvailable' => true],
+            
+        );
+        
+        return $this->render('babysitter/index.html.twig', ['babysitters' => $babysitters]);
     }
 
     #[Route('/new', name: 'app_babysitter_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, BabysitterRepository $babysitterRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, BabysitterRepository $babysitterRepository):Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         
         $babysitter = new Babysitter();
-        $form = $this->createForm(Babysitter1Type::class, $babysitter);
+        $form = $this->createForm(BabysitterType::class, $babysitter);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $babysitterRepository->add($babysitter);
             if ($babysitter->getPicture() != null) {
                 $file = $form->get('picture')->getData();
-                $fileName =  md5(uniqid()). '.' .$file->guessExtension();
+                $fileName =  uniqid().'.'.$file->guessExtension();
 
-                $file->move('/uploads', $fileName);
+                $file->move('uploads/', $fileName);
 
                 $babysitter->setPicture($fileName);
             }
+
+            $entityManager->persist($babysitter);
+            $entityManager->flush();
+
             // return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
             return $this->redirectToRoute('app_admin');
         }
-
         return $this->renderForm('babysitter/new.html.twig', [
             'babysitter' => $babysitter,
             'form' => $form,
@@ -61,15 +67,28 @@ class BabysitterController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_babysitter_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Babysitter $babysitter, BabysitterRepository $babysitterRepository): Response
+    public function edit(Request $request, Babysitter $babysitter, EntityManagerInterface $entityManager, BabysitterRepository $babysitterRepository): Response
     {
         $oldPicture = $babysitter->getPicture();
 
-        $form = $this->createForm(Babysitter1Type::class, $babysitter);
+        $form = $this->createForm(BabysitterType::class, $babysitter);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $babysitterRepository->add($babysitter);
+            if ($babysitter->getPicture() != null && $babysitter->getPicture() != $oldPicture) {
+                $file = $form->get('picture')->getData();
+                $fileName =  uniqid().'.'.$file->guessExtension();
+
+                $file->move('uploads/', $fileName);
+
+                $babysitter->setPicture($fileName);
+
+            } else {
+                $babysitter->setPicture($oldPicture);
+            }
+            $entityManager->persist($babysitter);
+            $entityManager->flush();
             // return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
             return $this->redirectToRoute('app_admin');
         }
