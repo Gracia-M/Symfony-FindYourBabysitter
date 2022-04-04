@@ -19,10 +19,8 @@ class BabysitterController extends AbstractController
     public function index(BabysitterRepository $babysitterRepository): Response
     {
         $babysitters = $babysitterRepository->findBy(
-            ['isAvailable' => true],
-            
+            ['isAvailable' => true],  
         );
-        
         return $this->render('babysitter/index.html.twig', ['babysitters' => $babysitters]);
     }
 
@@ -99,7 +97,7 @@ class BabysitterController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_babysitter_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_babysitter_delete', methods: ['GET','POST'])]
     public function delete(Request $request, Babysitter $babysitter, BabysitterRepository $babysitterRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -108,6 +106,10 @@ class BabysitterController extends AbstractController
             $babysitterRepository->remove($babysitter);
         }
 
-        return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
+        // return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);
+        return $this->renderForm('babysitter/_delete_form.html.twig', [
+        'babysitter' => $babysitter,
+        ]);
+        
     }
 }

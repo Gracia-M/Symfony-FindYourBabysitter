@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220403152343 extends AbstractMigration
+final class Version20220404094146 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20220403152343 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE babysitter (id INT AUTO_INCREMENT NOT NULL, picture VARCHAR(255) DEFAULT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, gender VARCHAR(255) DEFAULT NULL, location VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, is_available TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE babysitter (id INT AUTO_INCREMENT NOT NULL, picture VARCHAR(255) DEFAULT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, gender VARCHAR(255) DEFAULT NULL, location VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, is_available TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE babysitter_language (babysitter_id INT NOT NULL, language_id INT NOT NULL, INDEX IDX_CFEB729C5732FB3C (babysitter_id), INDEX IDX_CFEB729C82F1BAF4 (language_id), PRIMARY KEY(babysitter_id, language_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE contract (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, babysitter_id INT DEFAULT NULL, hour_start_contract TIME DEFAULT NULL, hour_end_contract TIME DEFAULT NULL, date_start_contract DATETIME DEFAULT NULL, date_end_contract DATETIME DEFAULT NULL, review LONGTEXT DEFAULT NULL, review_date DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_E98F2859A76ED395 (user_id), INDEX IDX_E98F28595732FB3C (babysitter_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE language (id INT AUTO_INCREMENT NOT NULL, label VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

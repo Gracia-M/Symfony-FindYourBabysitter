@@ -12,6 +12,10 @@
         {{ form_label(form.lastname, 'Nom de famille')}}
     </div>
     <div class="input-field col s12 m6 l6">
+        {{ form_widget(form.email, {'attr':{'placeholder': 'L\'adresse email'}}) }}
+        {{ form_label(form.email, 'Adresse email')}}
+    </div>
+    <div class="input-field col s12 m6 l6">
         {{ form_widget(form.gender, {'attr':{'placeholder': 'Le sexe'}}) }}
         {{ form_label(form.gender, 'Sexe')}}
     </div>

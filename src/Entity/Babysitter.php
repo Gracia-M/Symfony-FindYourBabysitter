@@ -24,6 +24,9 @@ class Babysitter
     #[ORM\Column(type: 'string', length: 255)]
     private $lastname;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $email;
+
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $gender;
 
@@ -41,7 +44,6 @@ class Babysitter
 
     #[ORM\OneToMany(mappedBy: 'babysitter', targetEntity: Contract::class)]
     private $contracts;
-
 
     public function __construct()
     {
@@ -86,6 +88,17 @@ class Babysitter
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -191,4 +204,5 @@ class Babysitter
 
         return $this;
     }
+
 }
