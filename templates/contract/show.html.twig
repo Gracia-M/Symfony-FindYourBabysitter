@@ -1,46 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contract{% endblock %}
+{% block title %}Afficher Contract{% endblock %}
 
 {% block body %}
-    <h1>Contract</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ contract.id }}</td>
-            </tr>
-            <tr>
-                <th>HourStartContract</th>
-                <td>{{ contract.hourStartContract ? contract.hourStartContract|date('H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>HourEndContract</th>
-                <td>{{ contract.hourEndContract ? contract.hourEndContract|date('H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DateStartContract</th>
-                <td>{{ contract.dateStartContract ? contract.dateStartContract|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DateEndContract</th>
-                <td>{{ contract.dateEndContract ? contract.dateEndContract|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Review</th>
-                <td>{{ contract.review }}</td>
-            </tr>
-            <tr>
-                <th>ReviewDate</th>
-                <td>{{ contract.reviewDate ? contract.reviewDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_contract_index') }}">back to list</a>
-
-    <a href="{{ path('app_contract_edit', {'id': contract.id}) }}">edit</a>
-
-    {{ include('contract/_delete_form.html.twig') }}
+    <contract class="container">
+		<div class="row">
+			<div class="col s12 m12 l8 offset-l2">
+				<div>
+                    <h5><strong>Heure début: </strong>{{ contract.hourStartContract ? contract.hourStartContract|date('H:i:s') : '' }}   </h5>
+                    <h5><strong>Date début: </strong>{{ contract.dateStartContract ? contract.dateStartContract|date('d-m-Y') : '' }}  </h5>
+                    
+                    <h5><strong>Heure fin: </strong>{{ contract.hourEndContract ? contract.hourEndContract|date('H:i:s') : '' }}   </h5>
+                    <h5><strong>Date fin: </strong>{{ contract.dateEndContract ? contract.dateEndContract|date('d-m-Y') : '' }}  </h5>
+                </div>
+			</div>
+		<div class="row">
+			<div class="col s12 m12 l8 offset-l2">
+				<h5>Avis:{{ contract.review }}</h5>
+                <p>Date d'avis: {{ contract.reviewDate ? contract.reviewDate|date('Y-m-d H:i:s') : '' }} </p>
+			</div> 
+            
+		</div>
+		<div class="row">
+			<div class="col s12 m12 l8 offset-l2">
+				<a href="{{ path('app_contract_edit', {'id': contract.id}) }}" class="btn btn-primary">Modifier</a>
+			</div>
+            <div class="col s12 m12 l8 offset-l2">
+				<a href="{{ path('app_contract_index') }}">Retour à la liste des contrats</a>
+			</div>
+		</div>
+	</contract>
+    
+    {# {{ include('contract/_delete_form.html.twig') }} #}
 {% endblock %}

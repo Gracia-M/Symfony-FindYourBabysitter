@@ -9,17 +9,17 @@ nav {
 
 /* babysitter card */
 .babysitter-card {
-	margin-bottom: 30px;
+	margin-bottom: 30px;		
 }
 
-.babysitter-card h4 {
+.babysitter-card h5 {
 	font-size: 1rem;
 	margin: 0;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
-.babysitter-card h4 a {
+.babysitter-card h5 a {
 	color: #d4b672;
 }
 
@@ -48,7 +48,7 @@ nav {
 	z-index: -1;
 }
 
-.babysitter-card.image-card h4 a {
+.babysitter-card.image-card h5 a {
 	font-size: 2.2rem;
 	color: #fff;
 }

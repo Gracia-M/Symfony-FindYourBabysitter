@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
                 $user2,
                 'ilyana'));
             $user2->setUsername('Gracia2');
-            $user1->setRoles(['ROLE_ADMIN']);
+            $user2->setRoles(['ROLE_ADMIN']);
             $manager->persist($user2);
 
     $manager->flush();

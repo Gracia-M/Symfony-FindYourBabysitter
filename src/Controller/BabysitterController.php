@@ -68,7 +68,6 @@ class BabysitterController extends AbstractController
     public function edit(Request $request, Babysitter $babysitter, EntityManagerInterface $entityManager, BabysitterRepository $babysitterRepository): Response
     {
         $oldPicture = $babysitter->getPicture();
-
         $form = $this->createForm(BabysitterType::class, $babysitter);
         $form->handleRequest($request);
 
@@ -85,6 +84,7 @@ class BabysitterController extends AbstractController
             } else {
                 $babysitter->setPicture($oldPicture);
             }
+
             $entityManager->persist($babysitter);
             $entityManager->flush();
             // return $this->redirectToRoute('app_babysitter_index', [], Response::HTTP_SEE_OTHER);

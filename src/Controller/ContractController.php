@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Contract;
 use App\Form\ContractType;
 use App\Repository\ContractRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/contract')]
 class ContractController extends AbstractController
@@ -22,7 +24,7 @@ class ContractController extends AbstractController
     }
 
     #[Route('/new', name: 'app_contract_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ContractRepository $contractRepository): Response
+    public function new(Request $request, ContractRepository $contractRepository,): Response
     {
         $contract = new Contract();
         $form = $this->createForm(ContractType::class, $contract);
@@ -30,12 +32,14 @@ class ContractController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $contractRepository->add($contract);
+
             return $this->redirectToRoute('app_contract_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('contract/new.html.twig', [
             'contract' => $contract,
-            'form' => $form,
+            'form'=> $form,
+            
         ]);
     }
 

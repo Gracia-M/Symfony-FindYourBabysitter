@@ -1,4 +1,16 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'row'}}) }}
+    <div class="input-field col s3 m3 l3">
+        <strong>Heure début:</strong> {{ form_widget(form.hourStartContract)}}
+        <br>
+        <strong>Date début:</strong> {{ form_widget(form.dateStartContract) }}
+    </div>
+    <div class="input-field col s3 m3 l3">
+        <strong>Heure fin:</strong> {{ form_widget(form.hourEndContract)}}
+        <br>
+        <strong>Date fin:</strong> {{ form_widget(form.dateEndContract) }}
+    </div>
+    {# <button class="btn">{{ button_label|default('Save') }}</button> #}
+    <div class="input-field col s12 m12 l12">
+        <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+    </div>
 {{ form_end(form) }}

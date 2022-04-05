@@ -30,7 +30,7 @@ class Contract
     #[ORM\Column(type: 'text', nullable: true)]
     private $review;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $reviewDate;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'contracts')]

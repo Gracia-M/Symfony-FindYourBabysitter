@@ -9,7 +9,7 @@
 				<div>
 					<img width="300" src="{{ asset('uploads/' ~ babysitter.picture) }}" class="responsive-img">
 				</div>
-                <h3>{{ babysitter.firstname }} {{babysitter.lastname}}</h3>
+                <h4>{{ babysitter.firstname }} {{babysitter.lastname}}</h4>
                 <h5>Location: {{ babysitter.location }} </h5>
 				<h6 class="languages">Langues parlées: {% for language in babysitter.languages %} {{ language.name }}{{ loop.last ? '' : ',' }} {% endfor %}</h6>
 			</div>
@@ -19,8 +19,12 @@
 				<h6>Description:
 					{{ babysitter.description }}
 				</h6>
-			</div>
+			</div> 
 		</div>
-		<a href="{{ path('app_babysitter_index') }}">Réserver</a>
+		<div class="row">
+			<div class="col s12 m12 l8 offset-l2">
+				<a href="{{ path('app_contract_new') }}" class="btn btn-primary">Réserver</a>
+			</div> 
+		</div>
 	</babysitter>
 {% endblock %}

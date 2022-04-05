@@ -3,34 +3,30 @@
 {% block title %}Contract{% endblock %}
 
 {% block body %}
-    <h3>Contract</h3>
+ <div class="container">
+		<div class="row">
+            <h3>Contrats</h3>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>HourStartContract</th>
-                <th>HourEndContract</th>
-                <th>DateStartContract</th>
-                <th>DateEndContract</th>
-                <th>Review</th>
-                <th>ReviewDate</th>
-                <th>actions</th>
+                <th>Heure début Contrat</th>
+                <th>Heure fin Contrat</th>
+                <th>Date début Contrat</th>
+                <th>Date fin Contract</th>
+                <th>  Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for contract in contracts %}
             <tr>
-                <td>{{ contract.id }}</td>
                 <td>{{ contract.hourStartContract ? contract.hourStartContract|date('H:i:s') : '' }}</td>
                 <td>{{ contract.hourEndContract ? contract.hourEndContract|date('H:i:s') : '' }}</td>
-                <td>{{ contract.dateStartContract ? contract.dateStartContract|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ contract.dateEndContract ? contract.dateEndContract|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ contract.review }}</td>
-                <td>{{ contract.reviewDate ? contract.reviewDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ contract.dateStartContract ? contract.dateStartContract|date('d-m-Y ') : '' }}</td>
+                <td>{{ contract.dateEndContract ? contract.dateEndContract|date('d-m-Y ') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_contract_show', {'id': contract.id}) }}">afficher</a>
-                    <a href="{{ path('app_contract_edit', {'id': contract.id}) }}">modifier</a>
+                    <a href="{{ path('app_contract_show', {'id': contract.id}) }}">Afficher |</a>
+                    <a href="{{ path('app_contract_edit', {'id': contract.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_contract_new') }}">Create new</a>
+    <a href="{{ path('app_babysitter_index') }}">Ajouter un contrat </a>
 {% endblock %}
