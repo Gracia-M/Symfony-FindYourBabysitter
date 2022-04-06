@@ -44,6 +44,12 @@ class BabysitterController extends AbstractController
                 $babysitter->setPicture($fileName);
             }
 
+            if ($babysitter->getIsAvailable() != null) {
+                $babysitter->setIsAvailable('true');
+            }
+            else 
+                $babysitter->setIsAvailable('false');
+
             $entityManager->persist($babysitter);
             $entityManager->flush();
 

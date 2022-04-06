@@ -3,18 +3,18 @@
 {% block title %} Babysitter | {{parent()}} {% endblock %}
 
 {% block body %}
-    <div class="container">
+	<div class="container">
 		<div class="row">
 			{% for babysitter in babysitters %}
-				<div class="col s12 m4 l3">
+				<div class="col s6 m4 l3">
 					<div class="babysitter-card">
 						<img src="{{ asset('uploads/' ~ babysitter.picture) }}" class="responsive-img">
-						<h5><a href="{{ path('app_babysitter_show', {'id': babysitter.id}) }}"> {{ babysitter.firstname }} {{ babysitter.lastname }}</a></h5>
-						<h6 class="location">{{ babysitter.location }}</h6>
+						<h5>{{ babysitter.firstname }} {{ babysitter.lastname }}</a></h5>
+						<h6 class="location">{{ babysitter.location }}</h6> 
+						<button class:"btn btn-primary"> <a href=" {{ path('app_babysitter_show', {'id': babysitter.id}) }}">VOIR PROFIL</button>
 					</div>
 				</div>
 			{% endfor %}
 		</div>
 	</div>
-
 {% endblock %}

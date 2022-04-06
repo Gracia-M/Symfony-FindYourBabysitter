@@ -1,11 +1,9 @@
-{{ form_start(form) }}
-    <div class="input-field col s12 m6 l6">
+{{ form_start(form, {'attr': {'class': 'row'}}) }}
+    <div class="input-field col s6 m6 l6">
         {{ form_widget(form.label, {'attr':{'placeholder': 'Labelle'}}) }}
-        
     </div>
-    <div class="input-field col s12 m6 l6">
-        {{ form_widget(form.name, {'attr':{'placeholder': 'Nom'}}) }}
-        
+    <div class="input-field col s6 m6 l6">
+        {{ form_widget(form.name, {'attr':{'placeholder': 'Nom'}}) }} 
     </div>
     
     <button class="btn">{{ button_label|default('Sauvegarder') }}</button>

@@ -12,7 +12,7 @@
                 <th>Id</th>
                 <th>Label</th>
                 <th>Name</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,8 +22,8 @@
                 <td>{{ language.label }}</td>
                 <td>{{ language.name }}</td>
                 <td>
-                    <a href="{{ path('app_language_show', {'id': language.id}) }}">afficher |</a>
-                    <a href="{{ path('app_language_edit', {'id': language.id}) }}">modifier</a>
+                    <a href="{{ path('app_language_show', {'id': language.id}) }}">Afficher |</a>
+                    <a href="{{ path('app_language_edit', {'id': language.id}) }}"> Modifier</a>
                 </td>
             </tr>
         {% else %}

@@ -7,7 +7,6 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <a href="{{ path('app_babysitter_new') }}" class="btn btn blue darken-4" style="float: right">Ajouter</a>
                 <h4>Babysitters</h4>
                 <table>
                     <tr>
@@ -38,6 +37,36 @@
                     {% endfor %}
                 </table>
             </div>
+            <a href="{{ path('app_babysitter_new') }}" class="btn btn blue darken-4" style="float: right">Ajouter</a>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <h4>Langues</h4>
+                <table>
+                    <tr>
+                        <th>Id</th>
+                        <th>Label</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                        
+                    </tr>
+                    {% set i = 1 %}
+                    {% for language in languages %}
+                        <tr>
+                            <td>{{ i }}</td>
+                            <td>{{ language.label }}</td>
+                            <td>{{ language.name }}</td>              
+                            <td>
+                                <a href="{{ path('app_language_edit', {'id': language.id }) }}">Modifier |</a>
+                                <a href="{{ path('app_language_delete', {'id': language.id}) }}">Effacer</a>
+                            </td>
+                        </tr>
+                        {% set i = i+1 %}
+                    {% endfor %}
+                </table>
+            </div>
+            <a href="{{ path('app_language_new') }}" class="btn btn blue darken-4" style="float: right">Ajouter</a>
         </div>
 
         <div class="row">
@@ -58,9 +87,9 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.username }}</td>
                             <td>
-                                <span class="badge blue">
-                                    admin
-                                </span>
+                                 <span class="badge {{ user.Roles ? 'blue' : 'red' }}">
+                                    {{ user.Roles ? 'admin' : 'user' }}
+                                </span> 
                             </td>
                             <td>
                                 <a href=""><i class="material-icons red-text">delete</i></a>

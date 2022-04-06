@@ -1,21 +1,6 @@
-{% extends 'base.html.twig' %}
-
-{% block title %} Effacer Babysitter{% endblock %}
-
-{% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col s12 m12 l12">
-            <h4>Effacer Babysitter {{ babysitter.lastname }}</h4>
-            <form method="post" action="{{ path('app_babysitter_delete', {'id': babysitter.id}) }}" onsubmit="return confirm('Vous êtes sur cous vouler effacer l\'objet ?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ babysitter.id) }}">
-            <button class="btn">Effacer</button>
-            </form>
-        </div>
-    </div>
-    <a href="{{ path('app_admin') }}">Retour à la liste</a>
-
-</div>
-{% endblock %}
+<form method="post" action="{{ path('app_babysitter_delete', {'id': babysitter.id}) }}" onsubmit="return confirm('Vous êtes sur cous vouler effacer l\'objet ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ babysitter.id) }}">
+    <button class="btn">Effacer</button>
+</form>
 
 
