@@ -11,8 +11,8 @@
 						<img src="{{ asset('uploads/' ~ babysitter.picture) }}" class="responsive-img">
 						<h5>{{ babysitter.firstname }} {{ babysitter.lastname }}</a></h5>
 						<h6 class="location">{{ babysitter.location }}</h6> 
-						<button class:"btn btn-primary"> <a href=" {{ path('app_babysitter_show', {'id': babysitter.id}) }}">VOIR PROFIL</button>
 					</div>
+					<button class:"btn btn-primary"> <a href=" {{ path('app_babysitter_show', {'id': babysitter.id}) }}">VOIR PROFIL</button>
 				</div>
 			{% endfor %}
 		</div>

@@ -16,8 +16,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(BabysitterRepository $babysitterRepository)
     {
-        $babysitters = $babysitterRepository->findBy(
-            ['isAvailable' => true],
+        $babysitters = $babysitterRepository->findAll(
             
         );
 
