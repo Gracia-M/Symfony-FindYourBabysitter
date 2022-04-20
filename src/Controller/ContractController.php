@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Contract;
+use App\Entity\User;
 use App\Form\ContractType;
 use App\Repository\ContractRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,9 +20,11 @@ class ContractController extends AbstractController
     #[Route('/', name: 'app_contract_index', methods: ['GET'])]
     public function index(ContractRepository $contractRepository): Response
     {
+        $contracts = $contractRepository->findAll();
         return $this->render('contract/index.html.twig', [
-            'contracts' => $contractRepository->findAll(),
+            'contracts'=> $contracts,
         ]);
+
     }
 
     #[Route('/new', name: 'app_contract_new', methods: ['GET', 'POST'])]

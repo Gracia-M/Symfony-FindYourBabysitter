@@ -25,6 +25,10 @@
 			<div class="col s12 m12 l8 offset-l2">
 				<a href="{{ path('app_contract_new') }}" class="btn btn-primary">Réserver</a>
 			</div> 
+			{% if is_granted('ROLE_ADMIN') %}
+			{{ include('babysitter/_delete_form.html.twig') }}
+			{% endif %}
 		</div>
+		
 	</babysitter>
 {% endblock %}
